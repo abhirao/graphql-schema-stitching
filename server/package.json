@@ -1,0 +1,13 @@
+{
+  "name": "schema-stitching-server",
+  "version": "0.0.1",
+  "description": "Server that stitches together 2 graphQL APIs",
+  "main": "index.js",
+  "author": "Abhi Rao",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "apollo-server": "^2.1.0",
+    "graphql": "^14.0.2"
+  }
+}
