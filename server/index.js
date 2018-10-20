@@ -1,52 +1,50 @@
 const { ApolloServer, gql } = require('apollo-server');
+const { makeRemoteExecutableSchema, introspectSchema, mergeSchemas } = require('graphql-tools');
+const { HttpLink } = require('apollo-link-http');
+const fetch = require('node-fetch');
 
-// This is a (sample) collection of books we'll be able to query
-// the GraphQL server for.  A more complete example might fetch
-// from an existing data source like a REST API or database.
-const books = [
+const graphqlApis = [
   {
-    title: 'Harry Potter and the Chamber of Secrets',
-    author: 'J.K. Rowling',
-  },
-  {
-    title: 'Jurassic Park',
-    author: 'Michael Crichton',
-  },
+    uri: 'http://alpha.openstates.org/graphql',
+  }
 ];
 
-// Type definitions define the "shape" of your data and specify
-// which ways the data can be fetched from the GraphQL server.
-const typeDefs = gql`
-  # Comments in GraphQL are defined with the hash (#) symbol.
-
-  # This "Book" type can be used in other type declarations.
-  type Book {
-    title: String
-    author: String
+const createRemoteExecutableSchemas = async () => {
+  let schemas = [];
+  for (let i = 0; i < graphqlApis.length; i++) {
+    const link = new HttpLink({
+      uri: graphqlApis[i].uri,
+      fetch
+    });
+    const remoteSchema = await introspectSchema(link);
+    const remoteExecutableSchema = makeRemoteExecutableSchema({
+      schema: remoteSchema,
+      link
+    });
+    schemas.push(remoteExecutableSchema);
   }
-
-  # The "Query" type is the root of all GraphQL queries.
-  # (A "Mutation" type will be covered later on.)
-  type Query {
-    books: [Book]
-  }
-`;
-
-// Resolvers define the technique for fetching the types in the
-// schema.  We'll retrieve books from the "books" array above.
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
+  return schemas;
 };
 
-// In the most basic sense, the ApolloServer can be started
-// by passing type definitions (typeDefs) and the resolvers
-// responsible for fetching the data for those types.
-const server = new ApolloServer({ typeDefs, resolvers });
+const createNewSchema = async () => {
+  const schemas = await createRemoteExecutableSchemas();
+  return mergeSchemas({
+    schemas
+  });
+};
 
-// This `listen` method launches a web-server.  Existing apps
-// can utilize middleware options, which we'll discuss later.
-server.listen({ port: 5000 }).then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+const runServer = async () => {
+  // Get newly merged schema
+  const schema = await createNewSchema();
+  // start server with the new schema
+  const server = new ApolloServer({ schema });
+  server.listen({ port: 5000 }).then(({url}) => {
+    console.log(`🚀  Server ready at ${url}`);
+  });
+}
+
+try {
+  runServer();
+} catch (err) {
+  console.error(err);
+}

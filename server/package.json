@@ -10,7 +10,11 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "apollo-fetch": "^0.7.0",
+    "apollo-link-context": "^1.0.9",
+    "apollo-link-http": "^1.5.5",
     "apollo-server": "^2.1.0",
-    "graphql": "^14.0.2"
+    "graphql": "^14.0.2",
+    "graphql-tools": "^4.0.2"
   }
 }
