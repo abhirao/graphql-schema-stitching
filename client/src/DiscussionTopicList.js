@@ -2,18 +2,19 @@ import React from "react";
 import { Query } from "react-apollo";
 import { Segment, List, Loader } from 'semantic-ui-react'
 import { GET_TOPICS } from "./apollo/queries";
+import "./DiscussionTopicList.css"
 
-const DiscussionTopicList = ({ people }) => (
+const DiscussionTopicList = ({ selectedId, onSelect, people }) => (
   <Segment>
     <Query
       query={GET_TOPICS}
     >
       {({loading, data}) => (
-        <List>
+        <List selection>
           {
-            loading ? <Loader content='Loading' /> : 
-              data.listDiscussionTopics.items.length === 0 ? 'No discussion topics' : data.listDiscussionTopics.items.map(item => (
-                <List.Item key={item.id}>
+            (loading || people.length === 0) ? <Loader content='Loading' /> : 
+              data.listDiscussionTopics.items.length === 0 ? 'No discussion topics' : data.listDiscussionTopics.items.map((item) => (
+                <List.Item key={item.id} className={item.id === selectedId ? 'selected' : ''} onClick={() => {onSelect(item.id);}}>
                   <List.Content>
                     <List.Header as="a">
                       {item.participants.map(email => (people.find(person => person.user_email === email).name)).join(', ')}

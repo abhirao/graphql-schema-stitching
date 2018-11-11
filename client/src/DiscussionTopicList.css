@@ -1,0 +1,4 @@
+.ui.selection.list .list>.item, .ui.selection.list>.item.selected {
+  background: rgba(0,0,0, .03);
+  color: rgba(0,0,0, .8);
+}
