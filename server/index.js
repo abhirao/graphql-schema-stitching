@@ -5,7 +5,10 @@ const fetch = require('node-fetch');
 
 const graphqlApis = [
   {
-    uri: 'http://alpha.openstates.org/graphql',
+    uri: 'https://countries.trevorblades.com',
+  },
+  {
+    uri: 'http://cyberdyne.lvh.me:3000/graphql?auth_token=admin@cyberdyne.com',
   }
 ];
 
@@ -13,9 +16,10 @@ const createRemoteExecutableSchemas = async () => {
   let schemas = [];
   for (let i = 0; i < graphqlApis.length; i++) {
     const link = new HttpLink({
-      uri: graphqlApis[i].uri,
+      ...graphqlApis[i],
       fetch
     });
+
     const remoteSchema = await introspectSchema(link);
     const remoteExecutableSchema = makeRemoteExecutableSchema({
       schema: remoteSchema,
