@@ -1,5 +1,19 @@
 import gql from "graphql-tag";
 
+export const GET_PEOPLE = gql`
+  query getPeople {
+    apps {
+      User_Profiles {
+        atoms {
+          properties {
+            name
+            user_email
+          }
+        }
+      }
+    }
+  }
+`;
 export const GET_TOPICS = gql`
   query getTopics {
     listDiscussionTopics {

@@ -3,7 +3,7 @@ import { Query } from "react-apollo";
 import { Segment, List, Loader } from 'semantic-ui-react'
 import { GET_TOPICS } from "./apollo/queries";
 
-const DiscussionTopicList = () => (
+const DiscussionTopicList = ({ people }) => (
   <Segment>
     <Query
       query={GET_TOPICS}
@@ -16,7 +16,7 @@ const DiscussionTopicList = () => (
                 <List.Item key={item.id}>
                   <List.Content>
                     <List.Header as="a">
-                      {item.participants.join(', ')}
+                      {item.participants.map(email => (people.find(person => person.user_email === email).name)).join(', ')}
                     </List.Header>
                     <List.Description>
                       {item.topic}
