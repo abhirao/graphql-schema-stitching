@@ -40,11 +40,13 @@ class DiscussionTopics extends Component {
                     onSubmit={(ev) => {
                       ev.preventDefault();
                       const { topic, participants } = this.state;
-                      makeTopic({ variables: { topicInput: { topic, participants } } });
+                      makeTopic({ variables: { topicInput: { topic, participants } } }).then(() => {
+                        this.setState({ topic: "", participants: [] });
+                      });
                     }}
                   >
-                    <PersonSelector onChange={(emails) => {this.setState({participants: emails });}}/>
-                    <TextArea placeholder="Topic" onChange={(ev, { value }) => { this.setState({ topic: value }); }}/>
+                    <PersonSelector value={this.state.participants} onChange={(emails) => {this.setState({participants: emails });}}/>
+                    <TextArea placeholder="Topic" value={this.state.topic} onChange={(ev, { value }) => { this.setState({ topic: value }); }}/>
                     <Button type="submit" content='Submit' primary/>
                   </Form>
                 )
