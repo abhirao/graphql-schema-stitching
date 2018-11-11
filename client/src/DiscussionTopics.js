@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Grid, Divider, Form, TextArea, Button } from 'semantic-ui-react'
+import { Header, Grid, Form, TextArea, Button } from 'semantic-ui-react'
+import gql from "graphql-tag";
+import { Mutation } from "react-apollo";
 import PersonSelector from './PersonSelector';
 import DiscussionTopicList from './DiscussionTopicList';
 
@@ -8,26 +10,50 @@ class DiscussionTopics extends Component {
     super(props);
     this.state = {
       participants: [],
-      message: "",
+      topic: "",
     };
   }
   render() {
     return (
-      <Grid columns={2} stackable textAlign='center'>
-        <Divider vertical />
-        <Grid.Row>
-          <Grid.Column>
-            <DiscussionTopicList />
-          </Grid.Column>
-          <Grid.Column>
-            <Form>
-              <PersonSelector onChange={(emails) => {this.setState({participants: emails });}}/>
-              <TextArea placeHolder="Topic" onChange={(ev, { value }) => { this.setState({ message: value }); }}/>
-              <Button content='Submit' primary onClick={() => { console.log("SUBMIT", this.state) }}/>
-            </Form>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <>
+        <Header size='huge'>GraphQL Schema Stitching Demo</Header>
+        <Grid columns={2} stackable>
+          <Grid.Row>
+            <Grid.Column>
+              <DiscussionTopicList />
+            </Grid.Column>
+            <Grid.Column>
+              <Mutation
+                mutation={gql`
+                  mutation makeTopic($topicInput: CreateDiscussionTopicInput!) {
+                    createDiscussionTopic(input: $topicInput) {
+                      id
+                      topic
+                      participants
+                    }
+                  }
+                `}
+              >
+              {
+                (makeTopic) => (
+                  <Form
+                    onSubmit={(ev) => {
+                      ev.preventDefault();
+                      const { topic, participants } = this.state;
+                      makeTopic({ variables: { topicInput: { topic, participants } } });
+                    }}
+                  >
+                    <PersonSelector onChange={(emails) => {this.setState({participants: emails });}}/>
+                    <TextArea placeholder="Topic" onChange={(ev, { value }) => { this.setState({ topic: value }); }}/>
+                    <Button type="submit" content='Submit' primary/>
+                  </Form>
+                )
+              }
+              </Mutation>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </>
     );
   }
 }
