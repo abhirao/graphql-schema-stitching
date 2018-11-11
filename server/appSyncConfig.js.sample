@@ -1,0 +1,7 @@
+// Sample config. Don't share you apiKey
+const awsInfo =  {
+    "graphqlEndpoint": "https://imeieihbzsqp6syjly.appsync-api.us-east-2.amazonaws.com/graphql",
+    "apiKey": "KEEP IT SECRET",
+};
+
+module.exports = awsInfo;

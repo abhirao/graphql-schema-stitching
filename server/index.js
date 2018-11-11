@@ -2,10 +2,14 @@ const { ApolloServer, gql } = require('apollo-server');
 const { makeRemoteExecutableSchema, introspectSchema, mergeSchemas } = require('graphql-tools');
 const { HttpLink } = require('apollo-link-http');
 const fetch = require('node-fetch');
+const appSyncConfig = require('./appSyncConfig');
 
 const graphqlApis = [
   {
-    uri: 'https://countries.trevorblades.com',
+    uri: appSyncConfig.graphqlEndpoint,
+    headers: {
+      'x-api-key': appSyncConfig.apiKey,
+    }
   },
   {
     uri: 'http://support.lvh.me:3000/graphql?auth_token=xPy8By19wx9X_mYUvyBt',
