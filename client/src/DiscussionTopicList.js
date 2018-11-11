@@ -1,22 +1,12 @@
 import React from "react";
 import { Query } from "react-apollo";
-import gql from "graphql-tag";
 import { Segment, List, Loader } from 'semantic-ui-react'
+import { GET_TOPICS } from "./apollo/queries";
 
 const DiscussionTopicList = () => (
   <Segment>
     <Query
-      query={gql`
-        {
-          listDiscussionTopics {
-            items {
-              id
-              topic
-              participants
-            }
-          }
-        }
-      `}
+      query={GET_TOPICS}
     >
       {({loading, data}) => (
         <List>

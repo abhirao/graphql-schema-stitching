@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Header, Grid, Form, TextArea, Button } from 'semantic-ui-react'
-import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
+import { GET_TOPICS, MAKE_TOPIC } from './apollo/queries';
 import PersonSelector from './PersonSelector';
 import DiscussionTopicList from './DiscussionTopicList';
 
@@ -24,15 +24,7 @@ class DiscussionTopics extends Component {
             </Grid.Column>
             <Grid.Column>
               <Mutation
-                mutation={gql`
-                  mutation makeTopic($topicInput: CreateDiscussionTopicInput!) {
-                    createDiscussionTopic(input: $topicInput) {
-                      id
-                      topic
-                      participants
-                    }
-                  }
-                `}
+                mutation={MAKE_TOPIC}
               >
               {
                 (makeTopic) => (
@@ -40,7 +32,7 @@ class DiscussionTopics extends Component {
                     onSubmit={(ev) => {
                       ev.preventDefault();
                       const { topic, participants } = this.state;
-                      makeTopic({ variables: { topicInput: { topic, participants } } }).then(() => {
+                      makeTopic({ variables: { topicInput: { topic, participants } }, refetchQueries: [{ query: GET_TOPICS }] }).then(() => {
                         this.setState({ topic: "", participants: [] });
                       });
                     }}
