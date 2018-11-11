@@ -8,7 +8,7 @@ const graphqlApis = [
     uri: 'https://countries.trevorblades.com',
   },
   {
-    uri: 'http://cyberdyne.lvh.me:3000/graphql?auth_token=admin@cyberdyne.com',
+    uri: 'http://support.lvh.me:3000/graphql?auth_token=xPy8By19wx9X_mYUvyBt',
   }
 ];
 
