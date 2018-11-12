@@ -38,8 +38,8 @@ class DiscussionTopicList extends Component {
             {
               selectedId.length > 0 && <Mutation mutation={DELETE_TOPIC}>
                 {
-                  (deleteTopic) => (
-                    <Button icon type="button" onClick={() => { deleteTopic({ variables: { topicInput: { id: selectedId } }, refetchQueries: [{ query: GET_TOPICS }] }).then(() => { this.setState({ selectedId: "" }) }); }}>
+                  (deleteTopic, { loading }) => (
+                    <Button icon type="button" disabled={loading} onClick={() => { deleteTopic({ variables: { topicInput: { id: selectedId } }, refetchQueries: [{ query: GET_TOPICS }] }).then(() => { this.setState({ selectedId: "" }) }); }}>
                       <Icon name='delete' />
                     </Button>
                   ) 

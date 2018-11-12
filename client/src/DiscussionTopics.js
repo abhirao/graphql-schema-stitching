@@ -34,7 +34,7 @@ class DiscussionTopics extends Component {
                         mutation={MAKE_TOPIC}
                       >
                       {
-                        (makeTopic) => (
+                        (makeTopic, { loading }) => (
                           <Form
                             onSubmit={(ev) => {
                               ev.preventDefault();
@@ -46,7 +46,7 @@ class DiscussionTopics extends Component {
                           >
                             <PersonSelector people={people} value={this.state.participants} onChange={(emails) => {this.setState({participants: emails });}}/>
                             <TextArea placeholder="Topic" value={this.state.topic} onChange={(ev, { value }) => { this.setState({ topic: value }); }}/>
-                            <Button type="submit" content='Submit' primary/>
+                            <Button type="submit" content='Submit' primary disabled={loading} />
                           </Form>
                         )
                       }
