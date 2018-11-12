@@ -39,7 +39,8 @@ class DiscussionTopicList extends Component {
               selectedId.length > 0 && <Mutation mutation={DELETE_TOPIC}>
                 {
                   (deleteTopic, { loading }) => (
-                    <Button icon type="button" disabled={loading} onClick={() => { deleteTopic({ variables: { topicInput: { id: selectedId } }, refetchQueries: [{ query: GET_TOPICS }] }).then(() => { this.setState({ selectedId: "" }) }); }}>
+                    <Button icon labelPosition={ loading && "left" } type="button" disabled={loading} onClick={() => { deleteTopic({ variables: { topicInput: { id: selectedId } }, refetchQueries: [{ query: GET_TOPICS }] }).then(() => { this.setState({ selectedId: "" }) }); }}>
+                      {loading ? "..." : null}
                       <Icon name='delete' />
                     </Button>
                   ) 

@@ -46,7 +46,7 @@ class DiscussionTopics extends Component {
                           >
                             <PersonSelector people={people} value={this.state.participants} onChange={(emails) => {this.setState({participants: emails });}}/>
                             <TextArea placeholder="Topic" value={this.state.topic} onChange={(ev, { value }) => { this.setState({ topic: value }); }}/>
-                            <Button type="submit" content='Submit' primary disabled={loading} />
+                            <Button type="submit" content={ loading ? 'Submiting...' : 'Submit' } primary disabled={loading} />
                           </Form>
                         )
                       }
