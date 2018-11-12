@@ -3,7 +3,7 @@
 ![Architecture](architecture.png)
 
 ## Schema Stitching Implementation
-  - About 60 lines of code using node / Apollo Server
+  - About 60 lines of code using node / Apollo Server. See implementation [here](server/index.js)
   - Does not need to know anything about endpoints. Introspection!
 
 ## AppSync
