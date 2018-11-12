@@ -35,3 +35,11 @@ export const MAKE_TOPIC = gql`
     }
   }
 `;
+
+export const DELETE_TOPIC = gql`
+  mutation deleteTopic($topicInput: DeleteDiscussionTopicInput!) {
+    deleteDiscussionTopic(input: $topicInput) {
+      id
+    }
+  }
+`;

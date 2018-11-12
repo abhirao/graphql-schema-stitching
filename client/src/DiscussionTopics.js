@@ -9,7 +9,6 @@ class DiscussionTopics extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTopic: "",
       participants: [],
       topic: "",
     };
@@ -28,7 +27,7 @@ class DiscussionTopics extends Component {
                 <Grid columns={2} stackable>
                   <Grid.Row>
                     <Grid.Column>
-                      <DiscussionTopicList selectedId={this.state.selectedTopic} people={people} onSelect={(id) => {this.setState({ selectedTopic: id })}} />
+                      <DiscussionTopicList people={people} />
                     </Grid.Column>
                     <Grid.Column>
                       <Mutation
