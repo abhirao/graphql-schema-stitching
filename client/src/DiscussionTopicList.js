@@ -25,7 +25,7 @@ class DiscussionTopicList extends Component {
                     <List.Item key={item.id} className={item.id === selectedId ? 'selected' : ''} onClick={() => {this.setState({ selectedId: item.id });}}>
                       <List.Content>
                         <List.Header as="a">
-                          {item.participants.map(email => (people.find(person => person.user_email === email).name)).join(', ')}
+                          {item.participants.map(id => (people.find(person => person.id === id).name)).join(', ')}
                         </List.Header>
                         <List.Description>
                           {item.topic}

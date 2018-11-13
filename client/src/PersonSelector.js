@@ -9,7 +9,7 @@ const PersonSelector = ({ people, value, onChange }) => (
         placeholder='Participants' 
         fluid multiple selection 
         value={value}
-        options={people.map((person) => ({ key: person.user_email, text: person.name, value: person.user_email }))} 
+        options={people.map((person) => ({ key: person.id, text: person.name, value: person.id }))} 
         onChange={(ev, { value }) => { onChange(value); }}
       />
     </Form.Field>

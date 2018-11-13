@@ -22,7 +22,7 @@ class DiscussionTopics extends Component {
         >
           {
             ({ loading, data }) => {
-              const people = loading ? [] : data.apps['User_Profiles'].atoms.map(rec => rec.properties);
+              const people = loading ? [] : data.apps['User_Profiles'].atoms.map(rec => ({ id: rec.id, name: rec.properties.name }));
               return (
                 <Grid columns={2} stackable>
                   <Grid.Row>

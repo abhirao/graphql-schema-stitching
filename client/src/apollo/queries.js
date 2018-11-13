@@ -5,6 +5,7 @@ export const GET_PEOPLE = gql`
     apps {
       User_Profiles {
         atoms {
+          id
           properties {
             name
             user_email
