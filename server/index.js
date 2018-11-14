@@ -34,7 +34,7 @@ const createRemoteExecutableSchemas = async () => {
   return schemas;
 };
 
-const createNewSchema = async () => {
+const createMergedSchema = async () => {
   const schemas = await createRemoteExecutableSchemas();
   return mergeSchemas({
     schemas
@@ -43,7 +43,7 @@ const createNewSchema = async () => {
 
 const runServer = async () => {
   // Get newly merged schema
-  const schema = await createNewSchema();
+  const schema = await createMergedSchema();
   // start server with the new schema
   const server = new ApolloServer({ schema });
   server.listen({ port: 5000 }).then(({url}) => {
